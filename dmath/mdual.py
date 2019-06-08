@@ -4,11 +4,11 @@ scalar = (int, float)
 
 class mdual:
 
-    def __init__(self, a, b=0):
-        if isinstance(a, mdual):
-            self.val = a.val
-        elif isinstance(a, scalar) and isinstance(b, scalar):
-            self.val = (a, b)
+    def __init__(self, *val):
+        if isinstance(val[0], mdual):
+            self.val = val[0].val
+        elif all([isinstance(a, scalar) for a in val]):
+            self.val = val
         else:
             raise TypeError
 
