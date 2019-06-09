@@ -1,0 +1,6 @@
+#ignore these files
+
+*.pyc
+/build
+/dist
+*.egg*
