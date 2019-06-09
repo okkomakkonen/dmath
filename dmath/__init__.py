@@ -1,5 +1,5 @@
-from .dual import dual
+from .dualnumbers import dual
 from .functions import exp, log, sin, cos, sqrt, cbrt
-from .derivative import grad
+from .derivative import grad, deriv
 
-__all__ = ['dual', 'exp', 'log', 'sin', 'cos', 'sqrt', 'cbrt', 'grad']
+__all__ = ['dual', 'deriv', 'exp', 'log', 'sin', 'cos', 'sqrt', 'cbrt', 'grad']

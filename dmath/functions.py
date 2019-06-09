@@ -1,5 +1,5 @@
 import math
-from .dual import dual
+from .dualnumbers import dual
 
 def exp(x):
     if isinstance(x, dual):
