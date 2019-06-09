@@ -112,7 +112,7 @@ class dual:
     def __rmul__(self, other):
         return self * other
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         """Divides a dual number
         
         Parameters
@@ -127,7 +127,7 @@ class dual:
         """
         return self*other**-1
 
-    def __rdiv__(self, other):
+    def __rtruediv__(self, other):
         return other*self**-1
 
     def __getitem__(self, index):
