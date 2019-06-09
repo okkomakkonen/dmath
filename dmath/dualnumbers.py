@@ -29,6 +29,15 @@ class dual:
 
         self.dim = len(self.val)
 
+    @property
+    def real(self):
+        return self[0]
+
+    @property
+    def inft(self):
+        return tuple(self[1:])
+    
+
     def __eq__(self, other):
         """Returns the equality of the two numbers
 

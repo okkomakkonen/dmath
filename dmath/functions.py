@@ -1,6 +1,9 @@
 import math
 from .dualnumbers import dual
 
+pi = math.pi
+e = math.e
+
 def exp(x):
     if isinstance(x, dual):
         val = math.exp(x[0])
@@ -32,6 +35,11 @@ def log(x):
         return dual(val, *[deriv*a for a in x[1:]])
     else:
         return math.log(x)
+
+def tan(x):
+    return sin(x)/cos(x)
+
+# TODO: acos, asin, atan, atan2, sinh, cosh, tanh, acosh, asinh, atanh
 
 def sqrt(x):
     return x**0.5
