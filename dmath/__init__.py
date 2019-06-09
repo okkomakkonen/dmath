@@ -1,5 +1,5 @@
-from .dual import *
-from .triple import *
-from .mdual import *
-from .functions import *
-from .derivative import *
+from .dual import dual
+from .functions import exp, log, sin, cos, sqrt, cbrt
+from .derivative import grad
+
+__all__ = ['dual', 'exp', 'log', 'sin', 'cos', 'sqrt', 'cbrt', 'grad']
