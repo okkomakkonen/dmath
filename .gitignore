@@ -6,3 +6,5 @@
 *.egg*
 *.ipynb
 /.ipynb_checkpoints
+*.sublime*
+*/__pycache__

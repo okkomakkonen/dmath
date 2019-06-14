@@ -1,5 +1,5 @@
 import math
-from .dualnumbers import dual
+from .dualnumbers import dual, scalar
 
 pi = math.pi
 e = math.e
@@ -37,13 +37,48 @@ def log(x):
         return math.log(x)
 
 def tan(x):
-    return sin(x)/cos(x)
+    if isinstance(x, dual):
+        val = math.tan(x[0])
+        deriv = 1/math.cos(x[0])**2
+        return dual(val, *[deriv*a for a in x[1:]])
+    else:
+        return math.tan(x)
 
-# TODO: acos, asin, atan, atan2, sinh, cosh, tanh, acosh, asinh, atanh
+def acos(x):
+    if isinstance(x, dual):
+        val = math.acos(x[0])
+        deriv = -1/math.sqrt(1-x[0]**2)
+        return dual(val, *[deriv*a for a in x[1:]])
+    else:
+        return math.acos(x)
+
+def asin(x):
+    if isinstance(x, dual):
+        val = math.asin(x[0])
+        deriv = 1/math.sqrt(1-x[0]**2)
+        return dual(val, *[deriv*a for a in x[1:]])
+    else:
+        return math.asin(x)
+
+def atan(x):
+    if isinstance(x, dual):
+        val = math.atan(x[0])
+        deriv = 1/(1 + x[0]**2)
+        return dual(val, *[deriv*a for a in x[1:]])
+    else:
+        return math.atan(x)
+
+# TODO: atan2, sinh, cosh, tanh, acosh, asinh, atanh
 
 def sqrt(x):
     return x**0.5
 
 def cbrt(x):
     return x**(1/3)
+
+def pow(x, y):
+    if isinstance(x, scalar) and isinstance(y, dual):
+        return y.__rpow__(x)
+    else:
+        return x**y
 

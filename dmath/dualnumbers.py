@@ -4,7 +4,10 @@ from itertools import zip_longest
 scalar = (int, float)
 
 class dual:
-    """Class for dual numbers with multiple infinitesimal parts"""
+    """Class for dual numbers with multiple infinitesimal parts
+    
+    Consult `wikipedia <https://en.wikipedia.org/wiki/Dual_number>`_ for further information on dual numbers.
+    """
 
     def __init__(self, *val):
         """Initializes the dual number or casts a scalar to a dual number
@@ -27,8 +30,6 @@ class dual:
         else:
             raise TypeError
 
-        self.dim = len(self.val)
-
     @property
     def real(self):
         return self[0]
@@ -36,8 +37,11 @@ class dual:
     @property
     def inft(self):
         return tuple(self[1:])
-    
 
+    @property
+    def dim(self):
+        return len(self.val)
+    
     def __eq__(self, other):
         """Returns the equality of the two numbers
 
@@ -56,7 +60,7 @@ class dual:
         return all([a == b for a, b in zip_longest(self.val, other.val, fillvalue=0)])
 
     def __repr__(self):
-        """Returns the string representation of the dual number"""
+        """Returns the string representation of the dual number in tuple format"""
         return str(self.val)
 
     def __neg__(self):
@@ -143,6 +147,23 @@ class dual:
         return self.val[index]
 
     def __pow__(self, other):
+        """Calculates the result of a dual number to the power of a dual number
+
+        TODO: there is currently no way of calculating say 2**dual(3,1) since there is no method __rpow__ or similar,
+            a possible solution is to create a new dmath.pow method that does it
+
+
+        Parameters
+        ----------
+        other : dual or scalar
+            the power self is raised to
+
+        Returns
+        -------
+        dual
+            result of the raising
+
+        """
         if isinstance(other, scalar):
             val = self[0]**other
             return dual(val, *[val*a*other/self[0] for a in self.val[1:]])
@@ -152,6 +173,9 @@ class dual:
             return dual(val, *[val*(a*other[0]/self[0] + b*math.log(self[0])) for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)])
         else:
             raise TypeError
+
+    def __rpow__(self, other):
+        pass
 
     def __float__(self):
         return float(self[0])

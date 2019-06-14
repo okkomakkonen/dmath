@@ -5,6 +5,7 @@ from .derivative import grad, deriv
 __all__ = ['dual', \
             'exp', 'log', \
             'sin', 'cos', 'tan', \
+            'asin', 'acos', 'atan', \
             'sqrt', 'cbrt', \
             'deriv', 'grad', \
             'pi', 'e', \
