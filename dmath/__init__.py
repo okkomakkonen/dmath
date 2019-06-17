@@ -6,6 +6,8 @@ __all__ = ['dual', \
             'exp', 'log', \
             'sin', 'cos', 'tan', \
             'asin', 'acos', 'atan', \
+            'sinh', 'cosh', 'tanh', \
+            'asinh', 'acosh', 'atanh', \
             'sqrt', 'cbrt', \
             'deriv', 'grad', \
             'pi', 'e', \

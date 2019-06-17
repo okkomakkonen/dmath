@@ -5,7 +5,7 @@ scalar = (int, float)
 
 class dual:
     """Class for dual numbers with multiple infinitesimal parts
-    
+
     Consult `wikipedia <https://en.wikipedia.org/wiki/Dual_number>`_ for further information on dual numbers.
     """
 
@@ -41,7 +41,7 @@ class dual:
     @property
     def dim(self):
         return len(self.val)
-    
+
     def __eq__(self, other):
         """Returns the equality of the two numbers
 
@@ -127,12 +127,12 @@ class dual:
 
     def __truediv__(self, other):
         """Divides a dual number
-        
+
         Parameters
         ----------
         other : scalar or dual
             number that self is divided by
-           
+
         Returns
         -------
         dual
@@ -151,6 +151,8 @@ class dual:
 
         TODO: there is currently no way of calculating say 2**dual(3,1) since there is no method __rpow__ or similar,
             a possible solution is to create a new dmath.pow method that does it
+
+            - Added a pow function.
 
 
         Parameters
@@ -174,12 +176,8 @@ class dual:
         else:
             raise TypeError
 
-    def __rpow__(self, other):
-        pass
-
     def __float__(self):
         return float(self[0])
 
     def __int__(self):
         return int(self[0])
-
