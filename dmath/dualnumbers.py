@@ -153,6 +153,7 @@ class dual:
             a possible solution is to create a new dmath.pow method that does it
 
             - Added a pow function.
+            - It doesn't work
 
 
         Parameters
