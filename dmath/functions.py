@@ -6,6 +6,7 @@ e = math.e
 
 # Exponential
 
+
 def exp(x):
     """Return the value e**x.
 
@@ -16,6 +17,7 @@ def exp(x):
         return dual(val, *[deriv*a for a in x[1:]])
     else:
         return math.exp(x)
+
 
 def log(x):
     """Return the logarithm of x.
@@ -30,6 +32,7 @@ def log(x):
 
 # Trigonometric
 
+
 def sin(x):
     """Return sine function of x.
 
@@ -41,6 +44,7 @@ def sin(x):
     else:
         return math.sin(x)
 
+
 def cos(x):
     """Return cosine function of x.
 
@@ -51,6 +55,7 @@ def cos(x):
         return dual(val, *[deriv*a for a in x[1:]])
     else:
         return math.cos(x)
+
 
 def tan(x):
     """Return tangent function of x.
@@ -65,6 +70,7 @@ def tan(x):
 
 # Inverse trigonometric
 
+
 def acos(x):
     """Return the inverse cosine of x.
 
@@ -76,6 +82,7 @@ def acos(x):
     else:
         return math.acos(x)
 
+
 def asin(x):
     """Return the inverse sine of x.
 
@@ -86,6 +93,7 @@ def asin(x):
         return dual(val, *[deriv*a for a in x[1:]])
     else:
         return math.asin(x)
+
 
 def atan(x):
     """Return the inverse tangent of x.
@@ -100,6 +108,7 @@ def atan(x):
 
 # Hyperbolic
 
+
 def sinh(x):
     """Return the hyperbolic sine of x.
 
@@ -111,6 +120,7 @@ def sinh(x):
     else:
         return math.sinh(x)
 
+
 def cosh(x):
     """Return the hyperbolic cosine of x.
 
@@ -121,6 +131,7 @@ def cosh(x):
         return dual(val, *[deriv*a for a in x[1:]])
     else:
         return math.cosh(x)
+
 
 def tanh(x):
     """Return the hyperbolic tangent of x.
@@ -135,6 +146,7 @@ def tanh(x):
 
 # Inverse hyperbolic
 
+
 def asinh(x):
     """Return the inverse hyperbolic sine of x.
 
@@ -146,6 +158,7 @@ def asinh(x):
     else:
         return math.asinh(x)
 
+
 def acosh(x):
     """Return the inverse hyperbolic cosine of x.
 
@@ -156,6 +169,7 @@ def acosh(x):
         return dual(val, *[deriv*a for a in x[1:]])
     else:
         return math.acosh(x)
+
 
 def atanh(x):
     """Return the inverse hyperbolic tangent of x.
@@ -170,11 +184,13 @@ def atanh(x):
 
 # Roots
 
+
 def sqrt(x):
     """Return the square root of x.
 
     """
     return x**0.5
+
 
 def cbrt(x):
     """Return the cube root of x.
@@ -184,6 +200,7 @@ def cbrt(x):
 
 # Powers
 
+
 def pow(x, y):
     """Return the value of x to the y.
 
@@ -192,3 +209,9 @@ def pow(x, y):
         return dual(x)**y
     else:
         return x**y
+
+# Epsilons
+
+
+def eps(n):
+    return dual(*(0 for _ in range(n)), 1)

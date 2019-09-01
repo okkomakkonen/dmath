@@ -1,12 +1,14 @@
 import math
 from itertools import zip_longest
 
-scalar = (int, float)
+_scalar = (int, float)
+
 
 class dual:
     """Class for dual numbers with multiple infinitesimal parts
 
-    Consult `wikipedia <https://en.wikipedia.org/wiki/Dual_number>`_ for further information on dual numbers.
+    Consult `wikipedia <https://en.wikipedia.org/wiki/Dual_number>`_
+    for further information on dual numbers.
     """
 
     def __init__(self, *val):
@@ -25,7 +27,7 @@ class dual:
         """
         if isinstance(val[0], dual) and len(val) == 1:
             self.val = val[0].val
-        elif all([isinstance(a, scalar) for a in val]):
+        elif all([isinstance(a, _scalar) for a in val]):
             self.val = val
         else:
             raise TypeError
@@ -115,7 +117,7 @@ class dual:
             raises error when other is wrong type
 
         """
-        if isinstance(other, scalar):
+        if isinstance(other, _scalar):
             return dual(*[other*a for a in self.val])
         elif isinstance(other, dual):
             return dual(self[0] * other[0], *[other[0]*a + self[0]*b for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)])
@@ -167,7 +169,7 @@ class dual:
             result of the raising
 
         """
-        if isinstance(other, scalar):
+        if isinstance(other, _scalar):
             val = self[0]**other
             return dual(val, *[val*a*other/self[0] for a in self.val[1:]])
         elif isinstance(other, dual):

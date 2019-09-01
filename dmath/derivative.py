@@ -1,9 +1,15 @@
 from .dualnumbers import dual
+from .functions import eps
+import numpy as np
+import operator
+from functools import reduce
+
 
 def deriv(func):
     def derivative(x):
-        return func(dual(x,1))[1]
+        return func(dual(x, 1))[1]
     return derivative
+
 
 def grad(func):
     def gradient(*args):
