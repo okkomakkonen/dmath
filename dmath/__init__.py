@@ -6,10 +6,9 @@ from .functions import (
     sinh, cosh, tanh,
     asinh, acosh, atanh,
     sqrt, cbrt,
-    deriv, grad,
     pi, e
 )
-from .derivative import grad, deriv
+from .derivative import grad
 
 __all__ = ['dual',
            'exp', 'log',
@@ -18,6 +17,6 @@ __all__ = ['dual',
            'sinh', 'cosh', 'tanh',
            'asinh', 'acosh', 'atanh',
            'sqrt', 'cbrt',
-           'deriv', 'grad',
+           'grad',
            'pi', 'e',
            ]

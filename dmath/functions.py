@@ -1,5 +1,7 @@
 import math
-from .dualnumbers import dual, scalar
+from .dualnumbers import dual, _scalar
+
+# Constants
 
 pi = math.pi
 e = math.e
@@ -205,7 +207,7 @@ def pow(x, y):
     """Return the value of x to the y.
 
     """
-    if isinstance(x, scalar) and isinstance(y, dual):
+    if isinstance(x, _scalar) and isinstance(y, dual):
         return dual(x)**y
     else:
         return x**y

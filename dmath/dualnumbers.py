@@ -1,6 +1,7 @@
 import math
 from itertools import zip_longest
 
+# Types that are scalars in this context
 _scalar = (int, float)
 
 
@@ -34,55 +35,40 @@ class dual:
 
     @property
     def real(self):
+        """Return real part
+        """
         return self[0]
 
     @property
     def inft(self):
+        """Return all infinitesimal parts
+        """
         return tuple(self[1:])
 
     @property
     def dim(self):
+        """Return dimension
+        """
         return len(self.val)
 
     def __eq__(self, other):
-        """Returns the equality of the two numbers
-
-        Parameters
-        ----------
-        other : dual or scalar
-            a scalar is cast as a dual
-
-        Returns
-        -------
-        bool
-            True if the numbers are equal and False otherwise
-
+        """Return the equality of the two numbers
         """
         other = dual(other)
-        return all([a == b for a, b in zip_longest(self.val, other.val, fillvalue=0)])
+        return all(a == b for a, b in zip_longest(self.val, other.val, fillvalue=0.0))
 
     def __repr__(self):
-        """Returns the string representation of the dual number in tuple format"""
+        """Return the string representation of the dual number in tuple format
+        """
         return str(self.val)
 
     def __neg__(self):
-        """Returns the negation of the dual number"""
+        """Return the negation of the dual number
+        """
         return dual(*[-a for a in self.val])
 
     def __add__(self, other):
-        """Adds two dual numbers
-
-        Parameters
-        ----------
-        other : scalar or dual
-            a scalar is cast as a dual
-
-        Returns
-        -------
-        dual
-            the sum of the dual numbers self and other
-
-
+        """Add two dual numbers, can take a scalar or a dual as input
         """
         other = dual(other)
         return dual(*[a + b for a, b in zip_longest(self.val, other.val, fillvalue=0)])
@@ -100,22 +86,7 @@ class dual:
         return -(self - other)
 
     def __mul__(self, other):
-        """Multiplies self with a scalar or dual
-
-        Parameters
-        ----------
-        other : scalar or dual
-
-        Returns
-        -------
-        dual
-            the product of self and other
-
-        Errors
-        ------
-        TypeError
-            raises error when other is wrong type
-
+        """Multiply self with a scalar or dual
         """
         if isinstance(other, _scalar):
             return dual(*[other*a for a in self.val])
@@ -128,17 +99,7 @@ class dual:
         return self * other
 
     def __truediv__(self, other):
-        """Divides a dual number
-
-        Parameters
-        ----------
-        other : scalar or dual
-            number that self is divided by
-
-        Returns
-        -------
-        dual
-            the result of the division
+        """Perform division of dual numbers
         """
         return self*other**-1
 
