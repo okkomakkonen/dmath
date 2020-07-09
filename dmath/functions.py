@@ -10,13 +10,13 @@ e = math.e
 
 
 def exp(x):
-    """Return the value e**x.
+    """Return the value exp(x)
 
     """
     if isinstance(x, dual):
         val = math.exp(x[0])
         deriv = val
-        return dual(val, *[deriv*a for a in x[1:]])
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.exp(x)
 
@@ -27,10 +27,11 @@ def log(x):
     """
     if isinstance(x, dual):
         val = math.log(x[0])
-        deriv = 1/x[0]
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = 1 / x[0]
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.log(x)
+
 
 # Trigonometric
 
@@ -42,7 +43,7 @@ def sin(x):
     if isinstance(x, dual):
         val = math.sin(x[0])
         deriv = math.cos(x[0])
-        return dual(val, *[deriv*a for a in x[1:]])
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.sin(x)
 
@@ -54,7 +55,7 @@ def cos(x):
     if isinstance(x, dual):
         val = math.cos(x[0])
         deriv = -math.sin(x[0])
-        return dual(val, *[deriv*a for a in x[1:]])
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.cos(x)
 
@@ -65,10 +66,11 @@ def tan(x):
     """
     if isinstance(x, dual):
         val = math.tan(x[0])
-        deriv = 1/math.cos(x[0])**2
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = 1 / math.cos(x[0]) ** 2
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.tan(x)
+
 
 # Inverse trigonometric
 
@@ -79,8 +81,8 @@ def acos(x):
     """
     if isinstance(x, dual):
         val = math.acos(x[0])
-        deriv = -1/math.sqrt(1-x[0]**2)
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = -1 / math.sqrt(1 - x[0] ** 2)
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.acos(x)
 
@@ -91,8 +93,8 @@ def asin(x):
     """
     if isinstance(x, dual):
         val = math.asin(x[0])
-        deriv = 1/math.sqrt(1-x[0]**2)
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = 1 / math.sqrt(1 - x[0] ** 2)
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.asin(x)
 
@@ -103,10 +105,11 @@ def atan(x):
     """
     if isinstance(x, dual):
         val = math.atan(x[0])
-        deriv = 1/(1 + x[0]**2)
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = 1 / (1 + x[0] ** 2)
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.atan(x)
+
 
 # Hyperbolic
 
@@ -118,7 +121,7 @@ def sinh(x):
     if isinstance(x, dual):
         val = math.sinh(x[0])
         deriv = math.cosh(x[0])
-        return dual(val, *[deriv*a for a in x[1:]])
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.sinh(x)
 
@@ -130,7 +133,7 @@ def cosh(x):
     if isinstance(x, dual):
         val = math.cosh(x[0])
         deriv = math.sinh(x[0])
-        return dual(val, *[deriv*a for a in x[1:]])
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.cosh(x)
 
@@ -141,10 +144,11 @@ def tanh(x):
     """
     if isinstance(x, dual):
         val = math.tanh(x[0])
-        deriv = math.cosh(x[0])**-2
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = math.cosh(x[0]) ** -2
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.tanh(x)
+
 
 # Inverse hyperbolic
 
@@ -155,8 +159,8 @@ def asinh(x):
     """
     if isinstance(x, dual):
         val = math.asinh(x[0])
-        deriv = 1/math.sqrt(x[0]**2 + 1)
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = 1 / math.sqrt(x[0] ** 2 + 1)
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.asinh(x)
 
@@ -167,8 +171,8 @@ def acosh(x):
     """
     if isinstance(x, dual):
         val = math.acosh(x[0])
-        deriv = 1/math.sqrt(x[0]**2 - 1)
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = 1 / math.sqrt(x[0] ** 2 - 1)
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.acosh(x)
 
@@ -179,10 +183,11 @@ def atanh(x):
     """
     if isinstance(x, dual):
         val = math.atanh(x[0])
-        deriv = 1/(1 - x[0]**2)
-        return dual(val, *[deriv*a for a in x[1:]])
+        deriv = 1 / (1 - x[0] ** 2)
+        return dual(val, *[deriv * a for a in x[1:]])
     else:
         return math.atanh(x)
+
 
 # Roots
 
@@ -191,14 +196,15 @@ def sqrt(x):
     """Return the square root of x.
 
     """
-    return x**0.5
+    return x ** 0.5
 
 
 def cbrt(x):
     """Return the cube root of x.
 
     """
-    return x**(1/3)
+    return x ** (1 / 3)
+
 
 # Powers
 
@@ -208,9 +214,10 @@ def pow(x, y):
 
     """
     if isinstance(x, _scalar) and isinstance(y, dual):
-        return dual(x)**y
+        return dual(x) ** y
     else:
-        return x**y
+        return x ** y
+
 
 # Epsilons
 
