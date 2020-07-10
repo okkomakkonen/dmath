@@ -13,9 +13,11 @@ pip install .
 ## Usage
 
 ```python
-from dmath import grad
+from dmath import grad, sin, cos
 
-dmath.dual(3,1)  # Creates a dual number with real part 3 and infinitesimal part 1
 f = lambda x: 3*x**2 + 1*x + 4  # Creates a polynomial w.r.t x
-dmath.grad(f)(3)  # Calculates the derivative of the polynomial f at x=3
+grad(f)(3)  # Calculates the derivative of the polynomial f at x=3
+
+g = lambda x, y: sin(x) * cos(y)
+grad(g)(2, 3)
 ```
