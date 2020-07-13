@@ -89,9 +89,15 @@ class dual:
         """Multiply self with a scalar or dual
         """
         if isinstance(other, _scalar):
-            return dual(*[other*a for a in self.val])
+            return dual(*[other * a for a in self.val])
         elif isinstance(other, dual):
-            return dual(self[0] * other[0], *[other[0]*a + self[0]*b for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)])
+            return dual(
+                self[0] * other[0],
+                *[
+                    other[0] * a + self[0] * b
+                    for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)
+                ]
+            )
         else:
             raise TypeError
 
@@ -101,10 +107,10 @@ class dual:
     def __truediv__(self, other):
         """Perform division of dual numbers
         """
-        return self*other**-1
+        return self * other ** -1
 
     def __rtruediv__(self, other):
-        return other*self**-1
+        return other * self ** -1
 
     def __getitem__(self, index):
         return self.val[index]
@@ -131,12 +137,18 @@ class dual:
 
         """
         if isinstance(other, _scalar):
-            val = self[0]**other
-            return dual(val, *[val*a*other/self[0] for a in self.val[1:]])
+            val = self[0] ** other
+            return dual(val, *[val * a * other / self[0] for a in self.val[1:]])
         elif isinstance(other, dual):
             other = dual(other)
-            val = self[0]**other[0]
-            return dual(val, *[val*(a*other[0]/self[0] + b*math.log(self[0])) for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)])
+            val = self[0] ** other[0]
+            return dual(
+                val,
+                *[
+                    val * (a * other[0] / self[0] + b * math.log(self[0]))
+                    for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)
+                ]
+            )
         else:
             raise TypeError
 
