@@ -28,3 +28,8 @@ $ pipenv install --dev
 >>> grad(g)(2, 3)
 (0.411982245665683, -0.12832006020245673)
 ```
+
+## Todo
+
+* `numpy` support
+* C version
