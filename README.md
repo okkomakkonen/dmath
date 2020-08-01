@@ -39,3 +39,4 @@ $ coverage report
 
 * `numpy` support
 * C version
+* Add more functionality to mirror math library
