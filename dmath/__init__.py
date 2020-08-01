@@ -28,6 +28,9 @@ from .functions import (
     expm1,
     erf,
     erfc,
+    isinf,
+    isfinite,
+    isnan,
 )
 from .derivative import grad
 
@@ -62,4 +65,7 @@ __all__ = [
     "expm1",
     "erf",
     "erfc",
+    "isinf",
+    "isfinite",
+    "isnan",
 ]

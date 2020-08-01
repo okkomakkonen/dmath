@@ -1,4 +1,4 @@
-from dmath import dual
+from dmath import dual, fsum, prod, isinf, isnan, isfinite, inf, nan
 import pytest
 
 
@@ -164,3 +164,40 @@ def test_getitem():
     assert a[0] == 3
     assert a[1] == 2
     assert a[2] == 1
+
+
+def test_fsum():
+
+    assert fsum([dual(1, 1), dual(2, 1), dual(3, 1), 4]) == dual(10, 3)
+
+
+def test_prod():
+
+    assert prod([dual(3, 1), dual(4, 1), 6]) == dual(3, 1) * dual(4, 1) * 6
+
+
+def test_isinf():
+
+    assert isinf(dual(inf, 1))
+    assert isinf(dual(1, inf))
+    assert isinf(inf)
+    assert not isinf(3)
+    assert not isinf(dual(3, 1))
+
+
+def test_isfinite():
+
+    assert isfinite(dual(3, 1))
+    assert isfinite(3)
+    assert not isfinite(dual(inf, 1))
+    assert not isfinite(dual(1, inf))
+    assert not isfinite(inf)
+
+
+def test_isnan():
+
+    assert isnan(dual(nan, 1))
+    assert isnan(dual(1, nan))
+    assert isnan(nan)
+    assert not isnan(3)
+    assert not isnan(dual(3, 1))

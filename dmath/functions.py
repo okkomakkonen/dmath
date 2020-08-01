@@ -50,9 +50,24 @@ erf = to_dmath(math.erf, lambda x, v: 2 / math.sqrt(math.pi) * math.exp(-(x ** 2
 erfc = to_dmath(math.erfc, lambda x, v: -2 / math.sqrt(math.pi) * math.exp(-(x ** 2)))
 
 prod = math.prod
-isinf = math.isinf
-isfinite = math.isfinite
-isnan = math.isnan
+
+
+def isinf(x):
+    if isinstance(x, dual):
+        return any(math.isinf(c) for c in x.val)
+    return math.isinf(x)
+
+
+def isfinite(x):
+    if isinstance(x, dual):
+        return all(math.isfinite(c) for c in x.val)
+    return math.isfinite(x)
+
+
+def isnan(x):
+    if isinstance(x, dual):
+        return any(math.isnan(c) for c in x.val)
+    return math.isnan(x)
 
 
 def fsum(itr):
