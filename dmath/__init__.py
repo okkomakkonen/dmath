@@ -17,6 +17,17 @@ from .functions import (
     sqrt,
     pi,
     e,
+    tau,
+    inf,
+    nan,
+    fsum,
+    prod,
+    log1p,
+    log10,
+    log2,
+    expm1,
+    erf,
+    erfc,
 )
 from .derivative import grad
 
@@ -40,4 +51,15 @@ __all__ = [
     "grad",
     "pi",
     "e",
+    "tau",
+    "inf",
+    "nan",
+    "prod",
+    "fsum",
+    "log1p",
+    "log10",
+    "log2",
+    "expm1",
+    "erf",
+    "erfc",
 ]

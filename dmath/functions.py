@@ -2,11 +2,15 @@
 import math
 from .dualnumbers import dual, _scalar
 from functools import wraps
+from itertools import zip_longest
 
 # Constants
 
 pi = math.pi
 e = math.e
+tau = math.tau
+inf = math.inf
+nan = math.nan
 
 
 def to_dmath(func, deriv):
@@ -37,6 +41,30 @@ tanh = to_dmath(math.tanh, lambda x, v: 1 / math.cosh(x) ** 2)
 asinh = to_dmath(math.asinh, lambda x, v: 1 / math.sqrt(x ** 2 + 1))
 acosh = to_dmath(math.acosh, lambda x, v: 1 / math.sqrt(x ** 2 - 1))
 atanh = to_dmath(math.atanh, lambda x, v: 1 / (1 - x ** 2))
+
+log1p = to_dmath(math.log1p, lambda x, v: 1 / x)
+log10 = to_dmath(math.log10, lambda x, v: 1 / (math.log(10) * x))
+log2 = to_dmath(math.log2, lambda x, v: 1 / (math.log(2) * x))
+expm1 = to_dmath(math.expm1, lambda x, v: v + 1)
+erf = to_dmath(math.erf, lambda x, v: 2 / math.sqrt(math.pi) * math.exp(-(x ** 2)))
+erfc = to_dmath(math.erfc, lambda x, v: -2 / math.sqrt(math.pi) * math.exp(-(x ** 2)))
+
+prod = math.prod
+isinf = math.isinf
+isfinite = math.isfinite
+isnan = math.isnan
+
+
+def fsum(itr):
+    if any(isinstance(i, dual) for i in itr):
+        return dual(
+            *(
+                math.fsum(i)
+                for i in zip_longest(*map(lambda x: dual(x).val, itr), fillvalue=0.0)
+            )
+        )
+    else:
+        return math.fsum(itr)
 
 
 def pow(x, y):

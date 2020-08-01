@@ -39,4 +39,4 @@ $ coverage report
 
 * `numpy` support
 * C version
-* Add more functionality to mirror math library
+* Replace dual number init with new

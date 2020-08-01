@@ -2,6 +2,7 @@ from dmath import grad
 import math
 import dmath
 from pytest import approx
+from dmath import dual
 
 
 def range(lo, hi):
@@ -10,6 +11,15 @@ def range(lo, hi):
     while x <= hi - diff:
         x += diff
         yield x
+
+
+def test_constants():
+
+    assert dmath.pi == math.pi
+    assert dmath.e == math.e
+    assert dmath.tau == math.tau
+    assert dmath.inf == math.inf
+    assert dmath.nan is math.nan
 
 
 def test_exp():
@@ -114,3 +124,45 @@ def test_sqrt():
     for x in range(0, 10):
         assert dmath.sqrt(x) == math.sqrt(x)
         assert grad(dmath.sqrt)(x) == approx(1 / (2 * math.sqrt(x)))
+
+
+def test_log1p():
+
+    for x in range(0, 0.1):
+        assert dmath.log1p(x) == math.log1p(x)
+        assert grad(dmath.log1p)(x) == 1 / x
+
+
+def test_log10():
+
+    for x in range(0, 10):
+        assert dmath.log10(x) == math.log10(x)
+        assert grad(dmath.log10)(x) == approx(1 / (math.log(10) * x))
+
+
+def test_log2():
+
+    for x in range(0, 10):
+        assert dmath.log2(x) == math.log2(x)
+        assert grad(dmath.log2)(x) == approx(1 / (math.log(2) * x))
+
+
+def test_expm1():
+
+    for x in range(0, 0.1):
+        assert dmath.expm1(x) == math.expm1(x)
+        assert grad(dmath.expm1)(x) == math.expm1(x) + 1.0
+
+
+def test_erf():
+
+    for x in range(-10, 10):
+        assert dmath.erf(x) == math.erf(x)
+        assert grad(dmath.erf)(x) == 2 / math.sqrt(math.pi) * math.exp(-(x ** 2))
+
+
+def test_erfc():
+
+    for x in range(-10, 10):
+        assert dmath.erfc(x) == math.erfc(x)
+        assert grad(dmath.erfc)(x) == -2 / math.sqrt(math.pi) * math.exp(-(x ** 2))
