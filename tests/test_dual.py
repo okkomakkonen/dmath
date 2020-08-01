@@ -1,8 +1,8 @@
-from dmath import dual, fsum, prod, isinf, isnan, isfinite, inf, nan
+from dmath import dual, fsum, prod, isinf, isnan, isfinite, inf, nan, eps
 import pytest
 
 
-def test_init():
+def test_new():
 
     with pytest.raises(TypeError):
         a = dual("hello")
@@ -10,6 +10,13 @@ def test_init():
     a = dual(3, 1)
     with pytest.raises(TypeError):
         b = dual(a, 4)
+
+
+def test_hash():
+
+    assert hash(dual(3)) == hash(3)
+    assert hash(dual(3, 1)) == hash(dual(3, 1))
+    assert hash(dual(3, 1)) != hash(dual(4, 2))
 
 
 def test_real():
@@ -169,6 +176,7 @@ def test_getitem():
 def test_fsum():
 
     assert fsum([dual(1, 1), dual(2, 1), dual(3, 1), 4]) == dual(10, 3)
+    assert fsum([0.1] * 10) == 1.0
 
 
 def test_prod():
@@ -201,3 +209,11 @@ def test_isnan():
     assert isnan(nan)
     assert not isnan(3)
     assert not isnan(dual(3, 1))
+
+
+def test_eps():
+
+    e1 = eps(1)
+    e2 = eps(2)
+    assert all(e1[i] == (1 if i == 1 else 0) for i in range(e1.dim))
+    assert all(e2[i] == (1 if i == 2 else 0) for i in range(e1.dim))

@@ -166,3 +166,9 @@ def test_erfc():
     for x in range(-10, 10):
         assert dmath.erfc(x) == math.erfc(x)
         assert grad(dmath.erfc)(x) == -2 / math.sqrt(math.pi) * math.exp(-(x ** 2))
+
+
+def test_pow():
+
+    assert dmath.pow(2, dual(3, 1)) == 2 ** dual(3, 1)
+    assert dmath.pow(2, 3) == pow(2, 3) == 8

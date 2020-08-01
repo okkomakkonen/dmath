@@ -31,10 +31,13 @@ from .functions import (
     isinf,
     isfinite,
     isnan,
+    eps,
+    pow,
 )
 from .derivative import grad
 
 __all__ = [
+    "grad",
     "dual",
     "exp",
     "log",
@@ -68,4 +71,5 @@ __all__ = [
     "isinf",
     "isfinite",
     "isnan",
+    "pow",
 ]

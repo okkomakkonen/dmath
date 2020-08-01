@@ -20,7 +20,7 @@ The tests can be run with
 ```bash
 $ pipenv shell
 $ coverage run -m pytest tests/
-$ coverage report
+$ coverage report -m --omit=*/site-packages/*
 ```
 
 ## Usage
@@ -39,4 +39,3 @@ $ coverage report
 
 * `numpy` support
 * C version
-* Replace dual number init with new

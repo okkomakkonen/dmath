@@ -19,14 +19,3 @@ def grad(func):
         return tuple(val[k] for k in range(1, n + 1)) if n > 1 else val[1]
 
     return gradient
-
-
-def diff(func):
-    """Return the derivative function of a given scalar valued function.
-    """
-
-    def deriv(arg):
-        val = func(arg + eps(1))
-        return val.inft[0]
-
-    return deriv

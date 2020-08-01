@@ -4,26 +4,43 @@ Implements a simple dual number class
 
 from math import log
 from itertools import zip_longest
+import numbers
 
 # Types that are scalars in this context
 _scalar = (int, float)
 
 
-class dual:
+class dual(numbers.Number):
     """Class for dual numbers with multiple infinitesimal parts
 
     Consult `wikipedia <https://en.wikipedia.org/wiki/Dual_number>`_
     for further information on dual numbers.
     """
 
-    def __init__(self, *val):
+    __slots__ = ("_val",)
+
+    def __new__(cls, *val):
         """Initializes the dual number or casts a scalar to a dual number"""
+
+        self = super(dual, cls).__new__(cls)
+
         if len(val) == 1 and isinstance(val[0], dual):
-            self.val = val[0].val
+            self._val = val[0]._val
         elif all(isinstance(a, _scalar) for a in val):
-            self.val = val
+            self._val = val
         else:
             raise TypeError("val has to be dual or scalar")
+
+        return self
+
+    @property
+    def val(self):
+        return self._val
+
+    def __hash__(self):
+        if self.dim == 1:
+            return hash(self[0])
+        return hash(self.val)
 
     @property
     def real(self):
