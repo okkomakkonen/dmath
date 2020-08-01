@@ -1,4 +1,8 @@
-import math
+"""
+Implements a simple dual number class
+"""
+
+from math import log
 from itertools import zip_longest
 
 # Types that are scalars in this context
@@ -13,147 +17,139 @@ class dual:
     """
 
     def __init__(self, *val):
-        """Initializes the dual number or casts a scalar to a dual number
-
-        Parameters
-        ----------
-        val : scalar or dual
-            variable number of scalars or a single dual number
-
-        Errors
-        ------
-        TypeError
-            raises error when inputs are wrong type
-
-        """
-        if isinstance(val[0], dual) and len(val) == 1:
+        """Initializes the dual number or casts a scalar to a dual number"""
+        if len(val) == 1 and isinstance(val[0], dual):
             self.val = val[0].val
-        elif all([isinstance(a, _scalar) for a in val]):
+        elif all(isinstance(a, _scalar) for a in val):
             self.val = val
         else:
-            raise TypeError
+            raise TypeError("val has to be dual or scalar")
 
     @property
     def real(self):
-        """Return real part
-        """
+        """Returns the real part"""
         return self[0]
 
     @property
     def inft(self):
-        """Return all infinitesimal parts
-        """
+        """Returns all infinitesimal parts"""
         return tuple(self[1:])
 
     @property
     def dim(self):
-        """Return dimension
-        """
+        """Returns dimension"""
         return len(self.val)
 
     def __eq__(self, other):
-        """Return the equality of the two numbers
-        """
+        """Returns the equality of the two numbers"""
         other = dual(other)
-        return all(a == b for a, b in zip_longest(self.val, other.val, fillvalue=0.0))
+        return all(a == b for a, b in zip_longest(self.val, other.val, fillvalue=0))
 
     def __repr__(self):
-        """Return the string representation of the dual number in tuple format
-        """
+        """Returns the representation of the dual number"""
+        return f"dual({', '.join(map(str, self.val))})"
+
+    def __str__(self):
+        """Returns the string of the dual number"""
         return str(self.val)
 
     def __neg__(self):
-        """Return the negation of the dual number
-        """
-        return dual(*[-a for a in self.val])
+        """Returns -self"""
+        return dual(*(-a for a in self.val))
 
     def __add__(self, other):
-        """Add two dual numbers, can take a scalar or a dual as input
-        """
-        other = dual(other)
-        return dual(*[a + b for a, b in zip_longest(self.val, other.val, fillvalue=0)])
+        """Returns self + other"""
+        if isinstance(other, _scalar):
+            return dual(self[0] + other, *self[1:])
+        elif isinstance(other, dual):
+            return dual(
+                *(a + b for a, b in zip_longest(self.val, other.val, fillvalue=0))
+            )
+        else:
+            return NotImplemented
 
-    def __iadd__(self, other):
-        return self + other
-
-    def __radd__(self, other):
-        return self + other
+    __radd__ = __iadd__ = __add__
 
     def __sub__(self, other):
+        """Returns self - other"""
         return self + (-other)
 
     def __rsub__(self, other):
+        """Returns other - self"""
         return -(self - other)
 
+    __isub__ = __sub__
+
     def __mul__(self, other):
-        """Multiply self with a scalar or dual
-        """
+        """Returns self * other"""
         if isinstance(other, _scalar):
-            return dual(*[other * a for a in self.val])
+            return dual(*(other * a for a in self.val))
         elif isinstance(other, dual):
             return dual(
                 self[0] * other[0],
-                *[
+                *(
                     other[0] * a + self[0] * b
                     for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)
-                ]
+                ),
             )
         else:
-            raise TypeError
+            return NotImplemented
 
-    def __rmul__(self, other):
-        return self * other
+    __rmul__ = __imul__ = __mul__
 
     def __truediv__(self, other):
-        """Perform division of dual numbers
-        """
-        return self * other ** -1
+        """Returns self / other"""
+        if isinstance(other, _scalar):
+            return 1 / other * self
+        elif isinstance(other, dual):
+            return self * other ** -1
+        else:
+            return NotImplemented
 
     def __rtruediv__(self, other):
-        return other * self ** -1
+        """Returns other / self"""
+        if isinstance(other, _scalar):
+            return other * self ** -1
+        else:
+            return NotImplemented
+
+    __itruediv__ = __truediv__
 
     def __getitem__(self, index):
+        """Returns a component of the dual number"""
         return self.val[index]
 
     def __pow__(self, other):
-        """Calculates the result of a dual number to the power of a dual number
-
-        TODO: there is currently no way of calculating say 2**dual(3,1) since there is no method __rpow__ or similar,
-            a possible solution is to create a new dmath.pow method that does it
-
-            - Added a pow function.
-            - It doesn't work
-
-
-        Parameters
-        ----------
-        other : dual or scalar
-            the power self is raised to
-
-        Returns
-        -------
-        dual
-            result of the raising
-
-        """
+        """Returns self ** other"""
         if isinstance(other, _scalar):
             val = self[0] ** other
-            return dual(val, *[val * a * other / self[0] for a in self.val[1:]])
+            return dual(val, *(val * a * other / self[0] for a in self.val[1:]))
         elif isinstance(other, dual):
-            other = dual(other)
             val = self[0] ** other[0]
             return dual(
                 val,
-                *[
-                    val * (a * other[0] / self[0] + b * math.log(self[0]))
+                *(
+                    val * (a * other[0] / self[0] + b * log(self[0]))
                     for a, b in zip_longest(self.val[1:], other.val[1:], fillvalue=0)
-                ]
+                ),
             )
         else:
-            raise TypeError
+            return NotImplemented
+
+    __ipow__ = __pow__
+
+    def __rpow__(self, other):
+        """Returns other ** self"""
+        if isinstance(other, _scalar):
+            val = other ** self[0]
+            return dual(val, *(val * a * log(other) for a in self.val[1:]),)
+        else:
+            return NotImplemented
 
     def __float__(self):
+        """Returns the float value of the first coordinate"""
         return float(self[0])
 
     def __int__(self):
+        """Returns the int value of the first coordinate"""
         return int(self[0])

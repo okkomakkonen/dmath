@@ -16,6 +16,12 @@ Using `pipenv` install all of the dev dependencies
 ```bash
 $ pipenv install --dev
 ```
+The tests can be run with
+```bash
+$ pipenv shell
+$ coverage run -m pytest tests/
+$ coverage report
+```
 
 ## Usage
 
