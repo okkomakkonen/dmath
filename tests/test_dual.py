@@ -4,6 +4,8 @@ import pytest
 
 def test_new():
 
+    assert dual() == 0
+
     with pytest.raises(TypeError):
         a = dual("hello")
 
@@ -18,6 +20,12 @@ def test_hash():
     assert hash(dual(3, 0)) == hash(3)
     assert hash(dual(3, 1)) == hash(dual(3, 1))
     assert hash(dual(3, 1)) != hash(dual(4, 2))
+
+
+def test_bool():
+
+    assert not dual()
+    assert dual(3, 1)
 
 
 def test_real():

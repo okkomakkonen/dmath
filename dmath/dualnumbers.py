@@ -42,6 +42,9 @@ class dual(numbers.Number):
             return hash(self[0])
         return hash(self.val)
 
+    def __bool__(self):
+        return self != 0
+
     @property
     def real(self):
         """Returns the real part"""
