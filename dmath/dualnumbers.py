@@ -38,7 +38,7 @@ class dual(numbers.Number):
         return self._val
 
     def __hash__(self):
-        if self.dim == 1:
+        if self.real == self:
             return hash(self[0])
         return hash(self.val)
 

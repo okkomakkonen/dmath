@@ -15,6 +15,7 @@ def test_new():
 def test_hash():
 
     assert hash(dual(3)) == hash(3)
+    assert hash(dual(3, 0)) == hash(3)
     assert hash(dual(3, 1)) == hash(dual(3, 1))
     assert hash(dual(3, 1)) != hash(dual(4, 2))
 
