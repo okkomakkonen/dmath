@@ -10,6 +10,11 @@ Install this package by running the setup file in a terminal
 $ pip install .
 ```
 
+or by installing from git
+```bash
+$ pip install git+https://github.com/okkomakkonen/dmath.git
+```
+
 ## Development
 
 Using `pipenv` install all of the dev dependencies
